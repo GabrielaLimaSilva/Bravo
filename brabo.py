@@ -80,14 +80,6 @@ st.markdown("""
         background: linear-gradient(to right, #4CAF50, #FFC107, #FF5722) !important;
     }
     
-    /* Botões de emoji menores e compactos */
-    div[data-testid="column"] button {
-        padding: 5px 2px !important;
-        font-size: 1.8em !important;
-        min-height: 50px !important;
-        height: 50px !important;
-    }
-    
     .resposta-registrada {
         background: white;
         padding: 20px;
@@ -126,13 +118,6 @@ st.markdown("""
             margin: 10px 0;
         }
         
-        div[data-testid="column"] button {
-            padding: 3px 1px !important;
-            font-size: 1.4em !important;
-            min-height: 45px !important;
-            height: 45px !important;
-        }
-        
         .stButton>button {
             font-size: 1em !important;
             padding: 10px 20px !important;
@@ -145,14 +130,6 @@ st.markdown("""
         .resposta-registrada p {
             font-size: 0.9em;
         }
-    }
-    
-    /* Labels dos números */
-    div[data-testid="column"] > div {
-        text-align: center;
-        font-size: 0.85em;
-        color: white;
-        font-weight: bold;
     }
     
     /* Métricas responsivas */
@@ -226,8 +203,9 @@ with st.container():
     )
     
     # Slider
+    st.markdown("---")
     nivel = st.slider(
-        "Arraste para escolher o nível:",
+        "Arraste a barra:",
         min_value=0,
         max_value=10,
         value=st.session_state.nivel_atual,
@@ -239,17 +217,6 @@ with st.container():
         st.session_state.nivel_atual = nivel
         st.session_state.mostrar_confirmacao = False
         st.rerun()
-    
-    # Escala de emojis clicáveis com números
-    st.markdown("### Ou clique no emoji:")
-    emoji_cols = st.columns(11)
-    for i, col in enumerate(emoji_cols):
-        with col:
-            st.markdown(f"<div style='text-align: center; font-size: 0.7em; color: white; font-weight: bold;'>{i}</div>", unsafe_allow_html=True)
-            if st.button(NIVEIS[i]['emoji'], key=f"emoji_{i}", use_container_width=True):
-                st.session_state.nivel_atual = i
-                st.session_state.mostrar_confirmacao = False
-                st.rerun()
     
     st.markdown("---")
     
