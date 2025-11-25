@@ -15,21 +15,29 @@ st.markdown("""
     <style>
     .main {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 15px;
+    }
+    
+    .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        max-width: 100%;
     }
     
     .titulo {
-        font-size: 3em !important;
+        font-size: 2em !important;
         font-weight: bold;
         text-align: center;
         color: white;
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        padding: 0 10px;
     }
     
     .emoji-display {
-        font-size: 150px;
+        font-size: 100px;
         text-align: center;
-        margin: 30px 0;
+        margin: 20px 0;
         animation: pulse 2s infinite;
     }
     
@@ -39,63 +47,52 @@ st.markdown("""
     }
     
     .nivel-texto {
-        font-size: 2em;
+        font-size: 1.3em;
         font-weight: bold;
         text-align: center;
-        margin: 20px 0;
-        padding: 15px;
+        margin: 15px 0;
+        padding: 12px;
         background: white;
-        border-radius: 15px;
+        border-radius: 12px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    
-    .emoji-scale {
-        display: flex;
-        justify-content: space-between;
-        font-size: 2.5em;
-        margin: 30px 0;
-        padding: 20px;
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    
-    .emoji-scale span {
-        cursor: pointer;
-        transition: transform 0.2s;
-        padding: 5px;
-    }
-    
-    .emoji-scale span:hover {
-        transform: scale(1.3);
     }
     
     .stButton>button {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        font-size: 1.3em;
-        font-weight: bold;
-        padding: 15px 40px;
-        border-radius: 50px;
-        border: none;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        font-size: 1.1em !important;
+        font-weight: bold !important;
+        padding: 12px 30px !important;
+        border-radius: 50px !important;
+        border: none !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+        width: 100% !important;
+        height: auto !important;
     }
     
     .stButton>button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4) !important;
     }
     
+    /* Slider com gradiente */
     div.stSlider > div[data-baseweb="slider"] > div > div {
-        background: linear-gradient(to right, #4CAF50, #FFC107, #FF5722);
+        background: linear-gradient(to right, #4CAF50, #FFC107, #FF5722) !important;
+    }
+    
+    /* Botões de emoji menores e compactos */
+    div[data-testid="column"] button {
+        padding: 5px 2px !important;
+        font-size: 1.8em !important;
+        min-height: 50px !important;
+        height: 50px !important;
     }
     
     .resposta-registrada {
         background: white;
-        padding: 25px;
-        border-radius: 15px;
-        margin: 20px 0;
+        padding: 20px;
+        border-radius: 12px;
+        margin: 15px 0;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         text-align: center;
     }
@@ -103,6 +100,89 @@ st.markdown("""
     .resposta-registrada h3 {
         color: #667eea;
         margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+    
+    .resposta-registrada p {
+        margin: 8px 0;
+        font-size: 1em;
+    }
+    
+    /* Ajustes para mobile */
+    @media (max-width: 640px) {
+        .titulo {
+            font-size: 1.5em !important;
+            margin-bottom: 10px;
+        }
+        
+        .emoji-display {
+            font-size: 80px;
+            margin: 15px 0;
+        }
+        
+        .nivel-texto {
+            font-size: 1.1em;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        div[data-testid="column"] button {
+            padding: 3px 1px !important;
+            font-size: 1.4em !important;
+            min-height: 45px !important;
+            height: 45px !important;
+        }
+        
+        .stButton>button {
+            font-size: 1em !important;
+            padding: 10px 20px !important;
+        }
+        
+        .resposta-registrada {
+            padding: 15px;
+        }
+        
+        .resposta-registrada p {
+            font-size: 0.9em;
+        }
+    }
+    
+    /* Labels dos números */
+    div[data-testid="column"] > div {
+        text-align: center;
+        font-size: 0.85em;
+        color: white;
+        font-weight: bold;
+    }
+    
+    /* Métricas responsivas */
+    div[data-testid="stMetricValue"] {
+        font-size: 1.5em;
+    }
+    
+    div[data-testid="stMetricLabel"] {
+        font-size: 0.9em;
+    }
+    
+    @media (max-width: 640px) {
+        div[data-testid="stMetricValue"] {
+            font-size: 1.2em;
+        }
+        
+        div[data-testid="stMetricLabel"] {
+            font-size: 0.8em;
+        }
+    }
+    
+    /* Tabela responsiva */
+    div[data-testid="stDataFrame"] {
+        font-size: 0.85em;
+    }
+    
+    @media (max-width: 640px) {
+        div[data-testid="stDataFrame"] {
+            font-size: 0.75em;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -160,17 +240,12 @@ with st.container():
         st.session_state.mostrar_confirmacao = False
         st.rerun()
     
-    # Escala de emojis (labels)
-    st.markdown("---")
-    cols = st.columns(11)
-    for i, col in enumerate(cols):
-        with col:
-            st.markdown(f"<div style='text-align: center; font-size: 0.8em;'>{i}</div>", unsafe_allow_html=True)
-    
-    # Escala de emojis clicáveis
+    # Escala de emojis clicáveis com números
+    st.markdown("### Ou clique no emoji:")
     emoji_cols = st.columns(11)
     for i, col in enumerate(emoji_cols):
         with col:
+            st.markdown(f"<div style='text-align: center; font-size: 0.7em; color: white; font-weight: bold;'>{i}</div>", unsafe_allow_html=True)
             if st.button(NIVEIS[i]['emoji'], key=f"emoji_{i}", use_container_width=True):
                 st.session_state.nivel_atual = i
                 st.session_state.mostrar_confirmacao = False
@@ -199,9 +274,10 @@ with st.container():
         st.markdown(f"""
             <div class="resposta-registrada">
                 <h3>✅ Resposta Registrada!</h3>
-                <p style="font-size: 1.5em; margin: 15px 0;">{ultima['emoji']} <strong>Nível {ultima['nivel']}: {ultima['texto']}</strong></p>
-                <p style="color: #666;">Registrado em: {ultima['timestamp']}</p>
-                <p style="color: #666;">Total de registros: {len(st.session_state.respostas)}</p>
+                <p style="font-size: 1.3em; margin: 12px 0;">{ultima['emoji']} <strong>Nível {ultima['nivel']}</strong></p>
+                <p style="font-size: 1em; margin: 8px 0;"><strong>{ultima['texto']}</strong></p>
+                <p style="color: #666; font-size: 0.85em;">{ultima['timestamp']}</p>
+                <p style="color: #666; font-size: 0.85em;">Total: {len(st.session_state.respostas)} registro(s)</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -214,22 +290,18 @@ if len(st.session_state.respostas) > 0:
     df = pd.DataFrame(st.session_state.respostas)
     
     # Estatísticas rápidas
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2 = st.columns(2)
     
     with col1:
-        st.metric("Total de Respostas", len(st.session_state.respostas))
-    
-    with col2:
-        media = df['nivel'].mean()
-        st.metric("Nível Médio", f"{media:.1f}")
-    
-    with col3:
+        st.metric("Total", len(st.session_state.respostas))
         mais_comum = df['nivel'].mode()[0]
         st.metric("Mais Comum", f"{mais_comum} {NIVEIS[mais_comum]['emoji']}")
     
-    with col4:
+    with col2:
+        media = df['nivel'].mean()
+        st.metric("Média", f"{media:.1f}")
         ultimo_nivel = st.session_state.respostas[-1]['nivel']
-        st.metric("Último Nível", f"{ultimo_nivel} {NIVEIS[ultimo_nivel]['emoji']}")
+        st.metric("Último", f"{ultimo_nivel} {NIVEIS[ultimo_nivel]['emoji']}")
     
     # Mostrar tabela de respostas
     st.markdown("### Últimas 10 Respostas")
@@ -243,21 +315,23 @@ if len(st.session_state.respostas) > 0:
     st.bar_chart(distribuicao)
     
     # Botões de ação
+    st.markdown("### Ações")
     col_a, col_b = st.columns(2)
     
     with col_a:
         # Botão de exportar
         json_data = json.dumps(st.session_state.respostas, indent=2, ensure_ascii=False)
         st.download_button(
-            label="💾 Exportar Dados (JSON)",
+            label="💾 Exportar",
             data=json_data,
-            file_name=f"respostas_brabo_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
-            mime="application/json"
+            file_name=f"respostas_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+            mime="application/json",
+            use_container_width=True
         )
     
     with col_b:
         # Botão de limpar
-        if st.button("🗑️ Limpar Histórico", type="secondary"):
+        if st.button("🗑️ Limpar", type="secondary", use_container_width=True):
             st.session_state.respostas = []
             st.session_state.mostrar_confirmacao = False
             st.rerun()
