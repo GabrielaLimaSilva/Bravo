@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import json
+import os
 
 # Configuração da página
 st.set_page_config(
@@ -187,6 +188,20 @@ if 'nivel_atual' not in st.session_state:
 if 'mostrar_confirmacao' not in st.session_state:
     st.session_state.mostrar_confirmacao = False
 
+# Função para salvar resposta em arquivo txt
+def salvar_em_txt(nivel, emoji, texto, timestamp):
+    """Salva a resposta em um arquivo .txt"""
+    filename = "respostas_brabo.txt"
+    
+    # Criar linha de registro
+    linha = f"{timestamp} | Nível {nivel} | {emoji} | {texto}\n"
+    
+    # Adicionar ao arquivo (append)
+    with open(filename, 'a', encoding='utf-8') as f:
+        f.write(linha)
+    
+    return filename
+
 # Título
 st.markdown('<h1 class="titulo">Quão Brabo Você Está? 😤</h1>', unsafe_allow_html=True)
 
@@ -223,21 +238,33 @@ with st.container():
     # Botão de registrar
     if st.button("📊 Registrar Resposta", key="btn_registrar"):
         # Criar registro
+        timestamp = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
         registro = {
             'nivel': st.session_state.nivel_atual,
             'emoji': NIVEIS[st.session_state.nivel_atual]['emoji'],
             'texto': NIVEIS[st.session_state.nivel_atual]['texto'],
-            'timestamp': datetime.now().strftime('%d/%m/%Y %H:%M:%S')
+            'timestamp': timestamp
         }
         
         # Adicionar às respostas
         st.session_state.respostas.append(registro)
+        
+        # Salvar em arquivo .txt
+        filename = salvar_em_txt(
+            registro['nivel'],
+            registro['emoji'],
+            registro['texto'],
+            timestamp
+        )
+        
         st.session_state.mostrar_confirmacao = True
+        st.session_state.arquivo_salvo = filename
         st.rerun()
     
     # Mostrar confirmação
     if st.session_state.mostrar_confirmacao and len(st.session_state.respostas) > 0:
         ultima = st.session_state.respostas[-1]
+        arquivo = st.session_state.get('arquivo_salvo', 'respostas_brabo.txt')
         st.markdown(f"""
             <div class="resposta-registrada">
                 <h3>✅ Resposta Registrada!</h3>
@@ -245,6 +272,7 @@ with st.container():
                 <p style="font-size: 1em; margin: 8px 0;"><strong>{ultima['texto']}</strong></p>
                 <p style="color: #666; font-size: 0.85em;">{ultima['timestamp']}</p>
                 <p style="color: #666; font-size: 0.85em;">Total: {len(st.session_state.respostas)} registro(s)</p>
+                <p style="color: #667eea; font-size: 0.85em; margin-top: 10px;">💾 Salvo em: {arquivo}</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -283,13 +311,13 @@ if len(st.session_state.respostas) > 0:
     
     # Botões de ação
     st.markdown("### Ações")
-    col_a, col_b = st.columns(2)
+    col_a, col_b, col_c = st.columns(3)
     
     with col_a:
-        # Botão de exportar
+        # Botão de exportar JSON
         json_data = json.dumps(st.session_state.respostas, indent=2, ensure_ascii=False)
         st.download_button(
-            label="💾 Exportar",
+            label="💾 JSON",
             data=json_data,
             file_name=f"respostas_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
             mime="application/json",
@@ -297,8 +325,26 @@ if len(st.session_state.respostas) > 0:
         )
     
     with col_b:
+        # Botão de download do TXT
+        if os.path.exists("respostas_brabo.txt"):
+            with open("respostas_brabo.txt", 'r', encoding='utf-8') as f:
+                txt_data = f.read()
+            st.download_button(
+                label="📄 TXT",
+                data=txt_data,
+                file_name="respostas_brabo.txt",
+                mime="text/plain",
+                use_container_width=True
+            )
+        else:
+            st.button("📄 TXT", disabled=True, use_container_width=True)
+    
+    with col_c:
         # Botão de limpar
         if st.button("🗑️ Limpar", type="secondary", use_container_width=True):
             st.session_state.respostas = []
             st.session_state.mostrar_confirmacao = False
+            # Opcional: limpar arquivo txt também
+            if os.path.exists("respostas_brabo.txt"):
+                os.remove("respostas_brabo.txt")
             st.rerun()
